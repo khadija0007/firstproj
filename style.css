@@ -1,0 +1,120 @@
+/* Custom CSS for Profile Card */
+
+/* Apply Inter font family to the body */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Base styles for the profile card container */
+.profile-card-container {
+    /* Tailwind provides most styling, but custom overrides or additions go here */
+    transform: translateY(0); /* Ensure no initial transform */
+    animation: fadeInScale 0.8s ease-out forwards; /* Simple animation on load */
+    opacity: 0; /* Start hidden for the animation */
+}
+
+/* Keyframe animation for the initial fade-in and slight scale */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Styles for interactive buttons */
+.interactive-button {
+    /* Replaced @apply with standard CSS properties */
+    padding: 0.75rem 1.5rem; /* py-3 px-6 */
+    border-radius: 9999px; /* rounded-full */
+    font-weight: 600; /* font-semibold */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    transition: all 0.3s ease-in-out; /* transition-all duration-300 ease-in-out */
+
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Hover effects for interactive buttons */
+.interactive-button:hover {
+    transform: scale(1.05); /* hover:scale-105 */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* hover:shadow-lg */
+}
+
+
+/* Focus visibility for accessibility */
+.interactive-button:focus-visible {
+    /* Replaced @apply ring utilities with standard box-shadow */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5); /* A blue focus ring similar to Tailwind's default */
+    outline: none;
+}
+/* Specific focus ring colors for different button backgrounds */
+.bg-blue-500:focus-visible {
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.5); /* ring-blue-300 equivalent */
+}
+.bg-purple-500:focus-visible {
+    box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.5); /* ring-purple-300 equivalent */
+}
+
+
+.interactive-button {
+    /* Replaced @apply with standard CSS properties */
+    padding: 0.75rem 1.5rem; /* py-3 px-6 */
+    border-radius: 9999px; /* rounded-full */
+    font-weight: 600; /* font-semibold */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    transition: all 0.3s ease-in-out; /* transition-all duration-300 ease-in-out */
+
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Hover effects for interactive buttons */
+.interactive-button:hover {
+    transform: scale(1.05); /* hover:scale-105 */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* hover:shadow-lg */
+}
+
+
+/* Focus visibility for accessibility */
+.interactive-button:focus-visible {
+    /* Replaced @apply ring utilities with standard box-shadow */
+    box-shadow: 0 0 0 4px rgba(118, 152, 206, 0.5); /* A blue focus ring similar to Tailwind's default */
+    outline: none;
+}
+/* Specific focus ring colors for different button backgrounds */
+.bg-blue-500:focus-visible {
+    box-shadow: 0 0 0 4px rgba(137, 173, 218, 0.5); /* ring-blue-300 equivalent */
+}
+.bg-purple-500:focus-visible {
+    box-shadow: 0 0 0 4px rgba(172, 150, 194, 0.5); /* ring-purple-300 equivalent */
+}
+
+
+/* Styles for Lucide icons within buttons/text */
+.lucide-icon {
+    width: 1.25em; /* Adjust icon size relative to font size */
+    height: 1.25em;
+    min-width: 1.25em; /* Prevent shrinking */
+    min-height: 1.25em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) { /* Small screens */
+    .interactive-button {
+        width: 100%; /* w-full */
+    }
+}

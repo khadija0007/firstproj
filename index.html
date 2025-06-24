@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile Card</title>
+    <!-- Tailwind CSS CDN for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for modern, simple icons (e.g., mail, info) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Link to your custom CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-inter bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center min-h-screen p-4 text-gray-800">
+
+    <div id="profileCard" class="profile-card-container bg-white p-8 rounded-xl shadow-2xl w-full max-w-sm lg:max-w-md text-center border border-gray-100 transition-opacity duration-500">
+
+        <!-- Profile Picture Section -->
+        <div class="mb-6">
+            <img src="download.jpg" alt="Profile Picture"
+                 class="w-32 h-32 rounded-full mx-auto border-4 border-blue-200 shadow-md object-cover">
+        </div>
+
+        <!-- Name Section -->
+        <div id="nameSection" class="transition-opacity duration-500">
+            <h1 class="text-4xl font-extrabold text-blue-700 mb-2">Khadija Nawaz</h1>
+        </div>
+
+        <!-- Brief Bio Section -->
+        <div id="bioSection" class="transition-opacity duration-500">
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                Creative developer with a passion for building intuitive and delightful web experiences.
+            </p>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <button id="contactMeBtn" class="interactive-button bg-blue-500 hover:bg-blue-600 text-white">
+                <i data-lucide="mail" class="lucide-icon mr-2"></i> Contact Me
+            </button>
+            <button id="learnMoreBtn" class="interactive-button bg-purple-500 hover:bg-purple-600 text-white">
+                <i data-lucide="info" class="lucide-icon mr-2"></i> Learn More
+            </button>
+        </div>
+
+        <!-- Contact Information Section (Initially Hidden) -->
+        <div id="contactInfoSection" class="interactive-section opacity-0 h-0 overflow-hidden transition-all duration-500 ease-in-out bg-blue-50 p-6 rounded-lg text-left border border-blue-100 mb-4">
+            <h2 class="text-2xl font-bold text-blue-600 mb-3">Get in Touch!</h2>
+            <p class="text-gray-700 mb-2 flex items-center">
+                <i data-lucide="phone" class="lucide-icon mr-2 text-blue-500"></i> Phone: +1 (123) 456-7890
+            </p>
+            <p class="text-gray-700 mb-2 flex items-center">
+                <i data-lucide="mail" class="lucide-icon mr-2 text-blue-500"></i> Email: <a href="mailto:jane.doe@example.com" class="text-blue-600 hover:underline">jane.doe@example.com</a>
+            </p>
+            <p class="text-gray-700 flex items-center">
+                <i data-lucide="linkedin" class="lucide-icon mr-2 text-blue-500"></i> LinkedIn: <a href="https://linkedin.com/in/janedoe" target="_blank" class="text-blue-600 hover:underline">linkedin.com/in/janedoe</a>
+            </p>
+        </div>
+
+        <!-- Extended Bio / Learn More Section (Initially Hidden) -->
+        <div id="learnMoreSection" class="interactive-section opacity-0 h-0 overflow-hidden transition-all duration-500 ease-in-out bg-purple-50 p-6 rounded-lg text-left border border-purple-100">
+            <h2 class="text-2xl font-bold text-purple-600 mb-3">About Me</h2>
+            <p class="text-gray-700 leading-relaxed">
+                I specialize in front-end development, focusing on React and modern JavaScript frameworks.
+                My goal is to craft user-friendly interfaces that are both aesthetically pleasing and highly functional.
+                I enjoy solving complex problems and continuously expanding my skill set. When I'm not coding,
+                you can find me exploring new coffee shops, hiking scenic trails, or delving into a good book.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Initialize Lucide icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+    <!-- Link to your custom JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
