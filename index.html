@@ -1,10 +1,11 @@
- <!DOCTYPE html>
+ 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -16,9 +17,9 @@
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
-                    <li><a href="career.html" class="nav-link" data-section="career">Career</a></li>
-                    <li><a href="games.html" class="nav-link" data-section="games">Games</a></li>
-                    <li><a href="maps.html" class="nav-link" data-section="maps">Maps</a></li>
+                    <li><a href="#career" class="nav-link" data-section="career">Career</a></li>
+                    <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
+                    <li><a href="#maps" class="nav-link" data-section="maps">Maps</a></li>
                 </ul>
             </nav>
         </div>
@@ -50,7 +51,142 @@
                 </div>
             </div>
         </section>
- 
+
+        <!-- Career Section -->
+        <section id="career" class="section">
+            <div class="container">
+                <h2 class="section-title">My Career Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <h3>Senior Developer</h3>
+                            <p class="timeline-date">2023 - Present</p>
+                            <p>Leading development teams and creating innovative solutions</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Full Stack Developer</h3>
+                            <p class="timeline-date">2021 - 2023</p>
+                            <p>Built web applications using modern technologies</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Junior Developer</h3>
+                            <p class="timeline-date">2020 - 2021</p>
+                            <p>Started my journey in software development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills">
+                    <h3>Technical Skills</h3>
+                    <div class="skill-bars">
+                        <div class="skill">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span class="skill-name">HTML/CSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span class="skill-name">React</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="section">
+            <div class="container">
+                <h2 class="section-title">Interactive Games</h2>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <h3>Tic Tac Toe</h3>
+                        <div class="tic-tac-toe">
+                            <div class="game-board" id="ticTacToeBoard">
+                                <div class="cell" data-index="0"></div>
+                                <div class="cell" data-index="1"></div>
+                                <div class="cell" data-index="2"></div>
+                                <div class="cell" data-index="3"></div>
+                                <div class="cell" data-index="4"></div>
+                                <div class="cell" data-index="5"></div>
+                                <div class="cell" data-index="6"></div>
+                                <div class="cell" data-index="7"></div>
+                                <div class="cell" data-index="8"></div>
+                            </div>
+                            <button class="game-button" id="resetTicTacToe">Reset Game</button>
+                            <div class="game-status" id="gameStatus">Player X's turn</div>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <h3>Color Memory</h3>
+                        <div class="memory-game">
+                            <div class="color-sequence" id="colorSequence"></div>
+                            <div class="memory-controls">
+                                <button class="game-button" id="startMemoryGame">Start Game</button>
+                                <div class="score">Score: <span id="memoryScore">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Maps Section -->
+        <section id="maps" class="section">
+            <div class="container">
+                <h2 class="section-title">Interactive Maps</h2>
+                <div class="maps-content">
+                    <div class="map-card">
+                        <h3>Location Finder</h3>
+                        <div class="location-controls">
+                            <input type="text" id="locationInput" placeholder="Enter a location...">
+                            <button class="map-button" id="findLocation">Find Location</button>
+                        </div>
+                        <div class="map-display" id="mapDisplay">
+                            <div class="map-placeholder">
+                                <div class="map-icon">🗺️</div>
+                                <p>Enter a location to see it on the map</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="map-card">
+                        <h3>Weather Map</h3>
+                        <div class="weather-controls">
+                            <button class="map-button" id="getWeather">Get Current Weather</button>
+                        </div>
+                        <div class="weather-display" id="weatherDisplay">
+                            <div class="weather-placeholder">
+                                <div class="weather-icon">🌤️</div>
+                                <p>Click to get weather information</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
