@@ -1,0 +1,489 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .game-card h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* Tic Tac Toe Styles */
+        .tic-tac-toe {
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 250px;
+            margin: 0 auto 20px;
+            background: #333;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #333;
+        }
+
+        .cell:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .cell.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .game-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .game-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .game-button:active {
+            transform: translateY(0);
+        }
+
+        .game-status {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Memory Game Styles */
+        .memory-game {
+            text-align: center;
+        }
+
+        .color-sequence {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 200px;
+            margin: 0 auto 25px;
+        }
+
+        .color-box {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .color-box:hover::before {
+            opacity: 1;
+        }
+
+        .color-box.active {
+            transform: scale(1.1);
+            border-color: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .color-box.red { background: #e74c3c; }
+        .color-box.blue { background: #3498db; }
+        .color-box.green { background: #2ecc71; }
+        .color-box.yellow { background: #f1c40f; }
+
+        .memory-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .score {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            background: rgba(0,0,0,0.1);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .game-message {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 25px;
+        }
+
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .info { color: #3498db; }
+
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cell {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .color-box {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="games" class="section">
+        <div class="container">
+            <h2 class="section-title">Interactive Games</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3>Tic Tac Toe</h3>
+                    <div class="tic-tac-toe">
+                        <div class="game-board" id="ticTacToeBoard">
+                            <div class="cell" data-index="0"></div>
+                            <div class="cell" data-index="1"></div>
+                            <div class="cell" data-index="2"></div>
+                            <div class="cell" data-index="3"></div>
+                            <div class="cell" data-index="4"></div>
+                            <div class="cell" data-index="5"></div>
+                            <div class="cell" data-index="6"></div>
+                            <div class="cell" data-index="7"></div>
+                            <div class="cell" data-index="8"></div>
+                        </div>
+                        <button class="game-button" id="resetTicTacToe">Reset Game</button>
+                        <div class="game-status" id="gameStatus">Player X's turn</div>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <h3>Color Memory</h3>
+                    <div class="memory-game">
+                        <div class="color-sequence" id="colorSequence">
+                            <div class="color-box red" data-color="red"></div>
+                            <div class="color-box blue" data-color="blue"></div>
+                            <div class="color-box green" data-color="green"></div>
+                            <div class="color-box yellow" data-color="yellow"></div>
+                        </div>
+                        <div class="memory-controls">
+                            <button class="game-button" id="startMemoryGame">Start Game</button>
+                            <div class="score">Score: <span id="memoryScore">0</span></div>
+                            <div class="game-message" id="memoryMessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Tic Tac Toe Game
+        class TicTacToe {
+            constructor() {
+                this.board = Array(9).fill('');
+                this.currentPlayer = 'X';
+                this.gameActive = true;
+                this.winningConditions = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                    [0, 4, 8], [2, 4, 6]
+                ];
+                this.init();
+            }
+
+            init() {
+                this.cells = document.querySelectorAll('.cell');
+                this.statusDisplay = document.getElementById('gameStatus');
+                this.resetButton = document.getElementById('resetTicTacToe');
+
+                this.cells.forEach(cell => {
+                    cell.addEventListener('click', this.handleCellClick.bind(this));
+                });
+
+                this.resetButton.addEventListener('click', this.resetGame.bind(this));
+            }
+
+            handleCellClick(event) {
+                const cell = event.target;
+                const index = parseInt(cell.getAttribute('data-index'));
+
+                if (this.board[index] !== '' || !this.gameActive) return;
+
+                this.board[index] = this.currentPlayer;
+                cell.textContent = this.currentPlayer;
+
+                if (this.checkWin()) {
+                    this.statusDisplay.textContent = `Player ${this.currentPlayer} wins!`;
+                    this.statusDisplay.className = 'game-status success';
+                    this.gameActive = false;
+                    this.disableCells();
+                } else if (this.board.every(cell => cell !== '')) {
+                    this.statusDisplay.textContent = "It's a tie!";
+                    this.statusDisplay.className = 'game-status info';
+                    this.gameActive = false;
+                } else {
+                    this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+                    this.statusDisplay.textContent = `Player ${this.currentPlayer}'s turn`;
+                    this.statusDisplay.className = 'game-status';
+                }
+            }
+
+            checkWin() {
+                return this.winningConditions.some(condition => {
+                    return condition.every(index => {
+                        return this.board[index] === this.currentPlayer;
+                    });
+                });
+            }
+
+            disableCells() {
+                this.cells.forEach(cell => {
+                    cell.classList.add('disabled');
+                });
+            }
+
+            resetGame() {
+                this.board = Array(9).fill('');
+                this.currentPlayer = 'X';
+                this.gameActive = true;
+                this.statusDisplay.textContent = "Player X's turn";
+                this.statusDisplay.className = 'game-status';
+
+                this.cells.forEach(cell => {
+                    cell.textContent = '';
+                    cell.classList.remove('disabled');
+                });
+            }
+        }
+
+        // Memory Game
+        class MemoryGame {
+            constructor() {
+                this.sequence = [];
+                this.playerSequence = [];
+                this.score = 0;
+                this.isPlaying = false;
+                this.isPlayerTurn = false;
+                this.colors = ['red', 'blue', 'green', 'yellow'];
+                this.init();
+            }
+
+            init() {
+                this.colorBoxes = document.querySelectorAll('.color-box');
+                this.startButton = document.getElementById('startMemoryGame');
+                this.scoreDisplay = document.getElementById('memoryScore');
+                this.messageDisplay = document.getElementById('memoryMessage');
+
+                this.startButton.addEventListener('click', this.startGame.bind(this));
+                
+                this.colorBoxes.forEach(box => {
+                    box.addEventListener('click', this.handleColorClick.bind(this));
+                });
+            }
+
+            startGame() {
+                this.sequence = [];
+                this.playerSequence = [];
+                this.score = 0;
+                this.isPlaying = true;
+                this.isPlayerTurn = false;
+                
+                this.updateScore();
+                this.showMessage('Watch the pattern!', 'info');
+                this.startButton.textContent = 'Playing...';
+                this.startButton.disabled = true;
+                
+                this.addToSequence();
+                setTimeout(() => this.playSequence(), 1000);
+            }
+
+            addToSequence() {
+                const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+                this.sequence.push(randomColor);
+            }
+
+            async playSequence() {
+                this.isPlayerTurn = false;
+                
+                for (let i = 0; i < this.sequence.length; i++) {
+                    await this.wait(600);
+                    this.flashColor(this.sequence[i]);
+                }
+                
+                await this.wait(1000);
+                this.isPlayerTurn = true;
+                this.showMessage('Repeat the pattern!', 'info');
+            }
+
+            flashColor(color) {
+                const colorBox = document.querySelector(`[data-color="${color}"]`);
+                colorBox.classList.add('active');
+                
+                setTimeout(() => {
+                    colorBox.classList.remove('active');
+                }, 400);
+            }
+
+            handleColorClick(event) {
+                if (!this.isPlayerTurn || !this.isPlaying) return;
+                
+                const clickedColor = event.target.getAttribute('data-color');
+                this.playerSequence.push(clickedColor);
+                
+                this.flashColor(clickedColor);
+                
+                if (this.checkPlayerSequence()) {
+                    if (this.playerSequence.length === this.sequence.length) {
+                        this.score++;
+                        this.updateScore();
+                        this.playerSequence = [];
+                        this.showMessage('Correct! Next level...', 'success');
+                        
+                        setTimeout(() => {
+                            this.addToSequence();
+                            this.playSequence();
+                        }, 1500);
+                    }
+                } else {
+                    this.gameOver();
+                }
+            }
+
+            checkPlayerSequence() {
+                const currentIndex = this.playerSequence.length - 1;
+                return this.playerSequence[currentIndex] === this.sequence[currentIndex];
+            }
+
+            gameOver() {
+                this.isPlaying = false;
+                this.isPlayerTurn = false;
+                this.showMessage(`Game Over! Final Score: ${this.score}`, 'error');
+                this.startButton.textContent = 'Start Game';
+                this.startButton.disabled = false;
+            }
+
+            updateScore() {
+                this.scoreDisplay.textContent = this.score;
+            }
+
+            showMessage(message, type) {
+                this.messageDisplay.textContent = message;
+                this.messageDisplay.className = `game-message ${type}`;
+            }
+
+            wait(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Initialize games when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new TicTacToe();
+            new MemoryGame();
+        });
+    </script>
+</body>
+</html>
