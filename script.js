@@ -1,4 +1,5 @@
- class Portfolio {
+ // Main JavaScript functionality
+class Portfolio {
     constructor() {
         this.currentSection = 'home';
         this.ticTacToeGame = null;
@@ -192,9 +193,6 @@
         };
 
         const startButton = document.getElementById('startMemoryGame');
-        const colorSequence = document.getElementById('colorSequence');
-        const scoreDisplay = document.getElementById('memoryScore');
-
         startButton.addEventListener('click', () => {
             this.startMemoryGame();
         });
@@ -235,7 +233,10 @@
         // Play the sequence
         this.memoryGame.sequence.forEach((color, index) => {
             setTimeout(() => {
-                const circle = Array.from(colorSequence.children).find(c => c.style.backgroundColor === color);
+                const circle = Array.from(colorSequence.children).find(c => 
+                    this.rgbToHex(c.style.backgroundColor) === color.toLowerCase() || 
+                    c.style.backgroundColor === color
+                );
                 if (circle) {
                     circle.classList.add('flash');
                     setTimeout(() => circle.classList.remove('flash'), 500);
@@ -282,12 +283,22 @@
         }, 100);
     }
 
+    rgbToHex(rgb) {
+        // Convert rgb(r, g, b) to hex format for color comparison
+        const result = rgb.match(/\d+/g);
+        if (result) {
+            return "#" + result.map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join("");
+        }
+        return rgb;
+    }
+
     setupMaps() {
         const findLocationBtn = document.getElementById('findLocation');
         const locationInput = document.getElementById('locationInput');
-        const mapDisplay = document.getElementById('mapDisplay');
         const getWeatherBtn = document.getElementById('getWeather');
-        const weatherDisplay = document.getElementById('weatherDisplay');
 
         findLocationBtn.addEventListener('click', () => {
             const location = locationInput.value.trim();
@@ -313,163 +324,16 @@
     findLocation(location) {
         const mapDisplay = document.getElementById('mapDisplay');
         
-        // Simulate location finding (in a real app, you'd use a geocoding API)
-        mapDisplay.innerHTML = `
-            <div class="location-info">
-                <h4>📍 Location Found</h4>
-                <p><strong>Place:</strong> ${location}</p>
-                <p><strong>Coordinates:</strong> ${(Math.random() * 180 - 90).toFixed(4)}°, ${(Math.random() * 360 - 180).toFixed(4)}°</p>
-                <p><strong>Region:</strong> ${this.getRandomRegion()}</p>
-                <p><strong>Population:</strong> ${Math.floor(Math.random() * 1000000).toLocaleString()}</p>
-                <div style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                    <div style="font-size: 2rem; text-align: center;">🗺️</div>
-                    <p style="text-align: center; margin-top: 0.5rem;">Interactive map view</p>
-                </div>
-            </div>
-        `;
-    }
-
-    getRandomRegion() {
-        const regions = ['North America', 'Europe', 'Asia', 'South America', 'Africa', 'Oceania'];
-        return regions[Math.floor(Math.random() * regions.length)];
-    }
-
-    getWeatherInfo() {
-        const weatherDisplay = document.getElementById('weatherDisplay');
+        // Show loading state
+        mapDisplay.innerHTML = '<div style="color: white; text-align: center;">🔍 Searching for location...</div>';
         
-        // Simulate weather data (in a real app, you'd use a weather API)
-        const temperatures = [15, 18, 22, 25, 28, 20, 12];
-        const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy', 'Stormy', 'Snowy'];
-        const icons = ['☀️', '☁️', '🌧️', '⛅', '⛈️', '❄️'];
-        
-        const randomTemp = temperatures[Math.floor(Math.random() * temperatures.length)];
-        const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        
-        weatherDisplay.innerHTML = `
-            <div class="weather-info">
-                <h4>🌤️ Current Weather</h4>
-                <div style="text-align: center; margin: 1rem 0;">
-                    <div style="font-size: 3rem;">${randomIcon}</div>
-                    <div style="font-size: 2rem; color: #FFD700; margin: 0.5rem 0;">${randomTemp}°C</div>
-                    <div style="font-size: 1.2rem;">${randomCondition}</div>
-                </div>
-                <p><strong>Humidity:</strong> ${Math.floor(Math.random() * 40 + 30)}%</p>
-                <p><strong>Wind Speed:</strong> ${Math.floor(Math.random() * 20 + 5)} km/h</p>
-                <p><strong>Pressure:</strong> ${Math.floor(Math.random() * 50 + 1000)} hPa</p>
-                <p><strong>UV Index:</strong> ${Math.floor(Math.random() * 10)}</p>
-            </div>
-        `;
-    }
-
-    setupInteractiveElements() {
-        // Learn More button animation
-        const learnMoreBtn = document.getElementById('learnMore');
-        learnMoreBtn.addEventListener('click', () => {
-            // Switch to career section
-            document.querySelector('[data-section="career"]').click();
-        });
-
-        // Add hover effects to timeline items
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        timelineItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                const dot = item.querySelector('.timeline-dot');
-                dot.style.transform = 'translateX(-50%) scale(1.5)';
-                dot.style.background = '#FFD700';
-            });
-            
-            item.addEventListener('mouseleave', () => {
-                const dot = item.querySelector('.timeline-dot');
-                if (!dot.classList.contains('active')) {
-                    dot.style.transform = 'translateX(-50%) scale(1)';
-                    dot.style.background = 'rgba(255, 255, 255, 0.5)';
-                }
-            });
-        });
-
-        // Add scroll animations
-        this.setupScrollAnimations();
-    }
-
-    setupScrollAnimations() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for scroll animations
-        document.querySelectorAll('.game-card, .map-card, .timeline-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    }
-
-    resetGames() {
-        this.resetTicTacToe();
-        this.endMemoryGame();
-    }
-}
-
-// Initialize the portfolio when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new Portfolio();
-});
-
-// Add some extra interactive features
-document.addEventListener('DOMContentLoaded', () => {
-    // Add parallax effect to hero section
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallax = document.querySelector('.hero');
-        if (parallax) {
-            const speed = scrolled * 0.5;
-            parallax.style.transform = `translateY(${speed}px)`;
-        }
-    });
-
-    // Add typing effect to hero title
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
-        let i = 0;
-        
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-        
-        setTimeout(typeWriter, 1000);
-    }
-
-    // Add floating animation to cards
-    const cards = document.querySelectorAll('.game-card, .map-card');
-    cards.forEach((card, index) => {
-        card.style.animation = `float 3s ease-in-out infinite ${index * 0.5}s`;
-    });
-
-    // Add CSS for floating animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-    `;
-    document.head.appendChild(style);
-});
+        // Simulate API call delay
+        setTimeout(() => {
+            mapDisplay.innerHTML = `
+                <div class="location-info">
+                    <h4>📍 Location Found</h4>
+                    <p><strong>Place:</strong> ${location}</p>
+                    <p><strong>Coordinates:</strong> ${(Math.random() * 180 - 90).toFixed(4)}°, ${(Math.random() * 360 - 180).toFixed(4)}°</p>
+                    <p><strong>Region:</strong> ${this.getRandomRegion()}</p>
+                    <p><strong>Population:</strong> ${Math.floor(Math.random() * 1000000).toLocaleString()}</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius:
