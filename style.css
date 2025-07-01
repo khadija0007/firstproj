@@ -44,6 +44,18 @@ body {
     font-weight: 700;
 }
 
+.hero-image {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.hero-image img {
+    max-width: 200px;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 .nav-list {
     display: flex;
     list-style: none;
